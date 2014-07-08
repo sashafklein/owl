@@ -1,0 +1,15 @@
+development:
+  adapter: postgresql
+  encoding: unicode
+  database: owl_development
+  pool: 5
+  username: sashafklein
+  password:
+
+test:
+  adapter: postgresql
+  encoding: unicode
+  database: owl_test
+  pool: 5
+  username: sashafklein
+  password:
