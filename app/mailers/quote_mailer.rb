@@ -4,7 +4,7 @@ class QuoteMailer < ActionMailer::Base
   def deliver_random_quote(user)
     return unless user && user.email && user.quotes.any?
 
-    @quote = user.quotes.to_a.sample
+    @quote = user.get_upcoming_quote!
     mail(to: user.email, subject: @quote.author)
   end
 end

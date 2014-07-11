@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140708055241) do
+ActiveRecord::Schema.define(version: 20140711075404) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 20140708055241) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "times_sent", default: 0
   end
 
   add_index "quotes", ["user_id"], name: "index_quotes_on_user_id", using: :btree
