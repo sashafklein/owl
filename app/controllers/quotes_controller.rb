@@ -10,7 +10,7 @@ class QuotesController < ApplicationController
 
     if author && body
       user = User.where(email: sender).first_or_create
-      quote = user.quotes.where(author: author, body: body).first_or_create
+      quote = user.add_quote(author: author, body: body)
     end
 
     head 200

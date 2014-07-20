@@ -6,4 +6,13 @@ class User < ActiveRecord::Base
     quote.increment_times_sent!
     quote
   end
+
+  def add_quote
+    quote = Quote.new(
+      author: author,
+      body: body,
+      times_sent: quotes.min_times_sent
+    )
+    quote.save
+  end
 end
