@@ -1,7 +1,8 @@
 class Quote < ActiveRecord::Base
-  belongs_to :user
+  belongs_to :collection
+  delegate :users, to: :collection
 
-  validate :is_unique_for_user
+  validate :is_unique_for_collection
 
   def self.sent_the_fewest_times
     where(times_sent: min_times_sent)
@@ -17,10 +18,10 @@ class Quote < ActiveRecord::Base
 
   private
 
-  def is_unique_for_user
-    return errors.add(:user, "can't be blank.") unless user
+  def is_unique_for_collection
+    return errors.add(:collection, "can't be blank.") unless collection
 
-    if user.quotes.find_by(author: author, body: body)
+    if collection.quotes.find_by(author: author, body: body)
       errors.add(:author_and_body, "can't be already taken")
     end
   end

@@ -11,26 +11,35 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140711075404) do
+ActiveRecord::Schema.define(version: 20140808164108) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "collections", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "quotes", force: true do |t|
     t.string   "author"
     t.text     "body"
-    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "times_sent", default: 0
+    t.integer  "times_sent",    default: 0
+    t.integer  "collection_id"
   end
 
-  add_index "quotes", ["user_id"], name: "index_quotes_on_user_id", using: :btree
+  add_index "quotes", ["collection_id"], name: "index_quotes_on_collection_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "collection_id"
   end
+
+  add_index "users", ["collection_id"], name: "index_users_on_collection_id", using: :btree
 
 end

@@ -1,5 +1,8 @@
 task :send_quotes => :environment do 
-  User.all.each do |user|
-    QuoteMailer.deliver_random_quote(user).deliver
+  Collection.find_each do |collection|
+    quote = collection.get_upcoming_quote!
+    collection.users.each do |user|
+      QuoteMailer.send_quote(user, quote).deliver
+    end
   end
 end

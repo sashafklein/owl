@@ -1,18 +1,15 @@
 class User < ActiveRecord::Base
-  has_many :quotes
+  belongs_to :collection
+  has_many :quotes, through: :collection
 
-  def get_upcoming_quote!
-    quote = quotes.sent_the_fewest_times.to_a.sample
-    quote.increment_times_sent!
-    quote
-  end
-
-  def add_quote
+  def add_quote(opts={})
     quote = Quote.new(
-      author: author,
-      body: body,
-      times_sent: quotes.min_times_sent
+      author: opts[:author],
+      body: opts[:body],
+      times_sent: quotes.min_times_sent,
+      collection: collection
     )
     quote.save
+    quote
   end
 end
