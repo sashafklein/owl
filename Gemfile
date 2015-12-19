@@ -11,11 +11,10 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 1.2'
 
 gem 'rspec-rails'
-gem 'pry-rails'
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
-  
+  gem 'pry-rails'
 end
 
 group :doc do
