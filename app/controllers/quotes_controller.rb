@@ -13,11 +13,11 @@ class QuotesController < ApplicationController
 
       puts "SUBJECT: ", subject
       puts "BODY: ", body
-      puts "PARAMS: ", params
+      puts "PARAMS: #{ params.to_s }"
       if subject.include?("DELETE")
-        Quote.delete!(user, subject.split("DELETE:").trim, body)
+        Quote.delete!(user, subject.split("DELETE:")[1].trim, body)
       elsif subject.include?("EDIT")
-        Quote.edit!(user, subject.split("EDIT:").trim, body)
+        Quote.edit!(user, subject.split("EDIT:")[1].trim, body)
       else 
         user.add_quote({author: subject, body: body})
       end

@@ -15,11 +15,14 @@ class Quote < ActiveRecord::Base
   def self.edit!(user, author, body)
     original = body.split("\n").select{ |l| l.include?("ORIGINAL:") }.gsub("ORIGINAL:", '').trim
     edited = body.split("\n").select{ |l| l.include?("EDITED:") }.gsub("EDITED:", '').trim
-    user.quotes.find_by(author: author, body: original).update_attribute(:body, edited)
+    quote = user.quotes.find_by(author: author, body: original)
+    puts "EDITING QUOTE: #{ quote }"
+    quote.update_attribute(:body, edited)
   end
 
   def self.delete!(user, author, body)
     quote = user.quotes.find_by(author: author, body: body)
+    puts "DELETING QUOTE: #{ quote }"
     quote.destroy
   end
 
