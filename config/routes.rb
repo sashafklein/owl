@@ -1,3 +1,3 @@
 Owl::Application.routes.draw do
-  post :quotes, to: 'quotes#create'
+  post :quotes, to: 'quotes#handle'
 end

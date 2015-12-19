@@ -12,6 +12,17 @@ class Quote < ActiveRecord::Base
     pluck(:times_sent).min || 0
   end
 
+  def self.edit!(user, author, body)
+    original = body.split("\n").select{ |l| l.include?("ORIGINAL:") }.gsub("ORIGINAL:", '').trim
+    edited = body.split("\n").select{ |l| l.include?("EDITED:") }.gsub("EDITED:", '').trim
+    user.quotes.find_by(author: author, body: original).update_attribute(:body, edited)
+  end
+
+  def self.delete!(user, author, body)
+    quote = user.quotes.find_by(author: author, body: body)
+    quote.destroy
+  end
+
   def increment_times_sent!
     update_attribute(:times_sent, times_sent + 1)
   end
