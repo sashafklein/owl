@@ -13,8 +13,8 @@ class Quote < ActiveRecord::Base
   end
 
   def self.edit!(user, author, body)
-    original = body.split("\n").select{ |l| l.include?("ORIGINAL:") }.gsub("ORIGINAL:", '').strip
-    edited = body.split("\n").select{ |l| l.include?("EDITED:") }.gsub("EDITED:", '').strip
+    original = body.split("\n").find{ |l| l.include?("ORIGINAL:") }.gsub("ORIGINAL:", '').strip
+    edited = body.split("\n").find{ |l| l.include?("EDITED:") }.gsub("EDITED:", '').strip
     quote = user.quotes.find_by(author: author, body: original)
     puts "EDITING QUOTE: #{ quote }"
     quote.update_attribute(:body, edited)

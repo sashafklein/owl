@@ -13,7 +13,7 @@ class QuotesController < ApplicationController
 
       puts "SUBJECT: #{subject}"
       puts "BODY: #{body}"
-      puts "PARAMS: #{ params.to_s }"
+
       if subject.include?("DELETE")
         puts "IN DELETE"
         Quote.delete!(user, subject.split("DELETE:")[1].strip, body)
