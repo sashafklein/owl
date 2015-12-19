@@ -14,6 +14,7 @@ class QuotesController < ApplicationController
       puts "SUBJECT: ", subject
       puts "BODY: ", body
       puts "PARAMS: #{ params.to_s }"
+      binding.pry
       if subject.include?("DELETE")
         Quote.delete!(user, subject.split("DELETE:")[1].trim, body)
       elsif subject.include?("EDIT")
