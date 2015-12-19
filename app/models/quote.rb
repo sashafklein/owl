@@ -14,16 +14,15 @@ class Quote < ActiveRecord::Base
 
   def self.edit!(user, author, body)
     original = body.split("\n").find{ |l| l.include?("ORIGINAL:") }.gsub("ORIGINAL:", '').strip
-    edited = body.split("\n").find{ |l| l.include?("EDITED:") }.gsub("EDITED:", '').strip
-    quote = user.quotes.find_by(author: author, body: original)
-    puts "EDITING QUOTE: #{ quote }"
-    quote.update_attribute(:body, edited)
+    if quote = Quote.find_by(author: author, body: original, collection: user.collection)
+      edited = body.split("\n").find{ |l| l.include?("EDITED:") }.gsub("EDITED:", '').strip
+      quote.update_attribute(:body, edited)
+    end
   end
 
   def self.delete!(user, author, body)
-    quote = user.quotes.find_by(author: author, body: body)
-    puts "DELETING QUOTE: #{ quote }"
-    quote.destroy
+    quote = Quote.find_by(author: author, body: body, collection: user.collection)
+    quote.destroy if quote
   end
 
   def increment_times_sent!

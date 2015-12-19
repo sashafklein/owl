@@ -15,13 +15,10 @@ class QuotesController < ApplicationController
       puts "BODY: #{body}"
 
       if subject.include?("DELETE")
-        puts "IN DELETE"
         Quote.delete!(user, subject.split("DELETE:")[1].strip, body)
       elsif subject.include?("EDIT")
-        puts "IN EDIT"
         Quote.edit!(user, subject.split("EDIT:")[1].strip, body)
       else 
-        puts "HERE. SUBJECT: #{subject}"
         user.add_quote({author: subject, body: body})
       end
     end
