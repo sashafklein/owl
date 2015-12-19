@@ -15,7 +15,7 @@ class QuotesController < ApplicationController
       puts "BODY: ", body
       puts "PARAMS: ", params
       if subject.include?("DELETE")
-        Quote.delete!(user, subject.split("DELETE:").trim, body
+        Quote.delete!(user, subject.split("DELETE:").trim, body)
       elsif subject.include?("EDIT")
         Quote.edit!(user, subject.split("EDIT:").trim, body)
       else 
