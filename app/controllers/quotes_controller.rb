@@ -11,6 +11,9 @@ class QuotesController < ApplicationController
     if subject && body
       user = User.where(email: sender).first_or_create
 
+      puts "SUBJECT: ", subject
+      puts "BODY: ", body
+      puts "PARAMS: ", params
       if subject.include?("DELETE")
         Quote.delete!(user, subject.split("DELETE:").trim, body
       elsif subject.include?("EDIT")
