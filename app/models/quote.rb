@@ -16,13 +16,17 @@ class Quote < ActiveRecord::Base
     original = body.split("\n").find{ |l| l.include?("ORIGINAL:") }.gsub("ORIGINAL:", '').strip
     if quote = Quote.find_by(author: author, body: original, collection: user.collection)
       edited = body.split("\n").find{ |l| l.include?("EDITED:") }.gsub("EDITED:", '').strip
+      QuoteMailer.confirm_edit(user, author, original, edited).deliver
       quote.update_attribute(:body, edited)
     end
   end
 
   def self.delete!(user, author, body)
     quote = Quote.find_by(author: author, body: body, collection: user.collection)
-    quote.destroy if quote
+    if quote
+      QuoteMailer.confirm_delete(user, quote).deliver
+      quote.destroy
+    end
   end
 
   def increment_times_sent!
