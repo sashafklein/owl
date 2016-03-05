@@ -2,7 +2,12 @@
   <h2 style='font-size: 24px; text-align: center; text-decoration: underline; font-weight: lighter'>
     <%= @quote.author %>
   </h2>
-  <p style='text-align: center; font-style: italic; line-height: 2; padding: 0 40px; font-size: 17px'>
-    &ldquo;<%= @quote.body %>&rdquo;
-  </p>
+    <% @quote.body.split("\r\n").each_with_index do |line, index| %>
+      <p style='text-align: center; font-style: italic; line-height: 2; padding: 0 40px; font-size: 17px'>
+        <% if index === 0 %>&ldquo;<% end %>
+        <%= line %>
+        <% if index === @quote.body.split("\r\n").length - 1 %>&rdquo;<% end %>
+      </p>
+    <% end %>
+  
 </div>
