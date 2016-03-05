@@ -2,7 +2,5 @@
   <h2 style='font-size: 24px; text-align: center; text-decoration: underline; font-weight: lighter'>
     <%= @quote.author %>
   </h2>
-  <p style='text-align: center; font-style: italic; line-height: 2; padding: 0 40px; font-size: 17px'>
-    &ldquo;<%= @quote.body %>&rdquo;
-  </p>
+  <%= render 'quote', body: @quote.body %>
 </div>

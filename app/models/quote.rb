@@ -12,18 +12,15 @@ class Quote < ActiveRecord::Base
     pluck(:times_sent).min || 0
   end
 
-  def self.edit!(user, author, body)
-    original = body.split("\n").find{ |l| l.include?("ORIGINAL:") }.gsub("ORIGINAL:", '').strip
-    if quote = Quote.find_by(author: author, body: original, collection: user.collection)
-      edited = body.split("\n").find{ |l| l.include?("EDITED:") }.gsub("EDITED:", '').strip
-      QuoteMailer.confirm_edit(user, author, original, edited).deliver
-      quote.update_attribute(:body, edited)
+  def self.edit!(user, subject, body)
+    if quote = Quote.find( pluck_id(subject, 'EDIT') )
+      QuoteMailer.confirm_edit(user, quote, body).deliver
+      quote.update_attribute(:body, body)
     end
   end
 
-  def self.delete!(user, author, body)
-    quote = Quote.find_by(author: author, body: body, collection: user.collection)
-    if quote
+  def self.delete!(user, subject)
+    if quote = Quote.find( pluck_id(subject, 'DELETE') )
       QuoteMailer.confirm_delete(user, quote).deliver
       quote.destroy
     end
@@ -34,6 +31,10 @@ class Quote < ActiveRecord::Base
   end
 
   private
+
+  def pluck_id(subject, action_string) 
+    subject.split(action_string)[1].gsub(':', '').gsub('-', '').strip
+  end
 
   def is_unique_for_collection
     return errors.add(:collection, "can't be blank.") unless collection

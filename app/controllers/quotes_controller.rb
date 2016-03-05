@@ -15,9 +15,9 @@ class QuotesController < ApplicationController
       puts "BODY: #{body}"
 
       if subject.include?("DELETE")
-        Quote.delete!(user, subject.split("DELETE:")[1].strip, body)
+        Quote.delete!(user, subject)
       elsif subject.include?("EDIT")
-        Quote.edit!(user, subject.split("EDIT:")[1].strip, body)
+        Quote.edit!(user, subject, body)
       else 
         user.add_quote({author: subject, body: body})
       end

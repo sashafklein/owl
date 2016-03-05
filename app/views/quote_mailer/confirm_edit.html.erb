@@ -5,11 +5,13 @@
   
   <h4>From:</h4>
   <p style='text-align: center; font-style: italic; line-height: 2; padding: 0 40px; font-size: 17px'>
-    &ldquo;<%= @original %>&rdquo;
+    <%= render 'quote', body: @original.body %>
   </p>
 
   <h4>To:</h4>
   <p style='text-align: center; font-style: italic; line-height: 2; padding: 0 40px; font-size: 17px'>
-    &ldquo;<%= @edited %>&rdquo;
+    <%= render 'quote', body: @edited %>
   </p>
+
+  <p style='text-align: center; font-size: 10px; color: #383837'><%= @original.id %></p>
 </div>
