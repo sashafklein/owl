@@ -8,7 +8,7 @@ class QuoteMailer < ActionMailer::Base
 
     mail({
       to: user.email, 
-      from: "#{quote.author} - Quote Owl <postmaster@app27196200.mailgun.org>", 
+      from: "#{quote.author.gsub(/[\,'."\(\)#]/, '')} - Quote Owl <postmaster@app27196200.mailgun.org>", 
       subject: display_in_subject ? quote.body : quote.author
     })
   end

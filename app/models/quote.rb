@@ -14,7 +14,6 @@ class Quote < ActiveRecord::Base
 
   def self.edit!(user, subject, body)
     if quote = Quote.find( pluck_id(subject, 'EDIT') )
-      puts "---------- editing quote #{quote.id}"
       QuoteMailer.confirm_edit(user, quote, body).deliver_now
       quote.update_attribute(:body, body)
     end
