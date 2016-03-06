@@ -1,6 +1,6 @@
 class QuoteMailerPreview < ActionMailer::Preview
   def send_quote
-    QuoteMailer.send_quote(User.first, Quote.find(190))
+    QuoteMailer.send_quote(User.first, random_quote)
   end
 
   def confirm_delete
@@ -14,6 +14,6 @@ class QuoteMailerPreview < ActionMailer::Preview
   private
 
   def random_quote
-    @random_Quote ||= Quote.all.sample(1).first
+    @random_quote ||= Quote.all.sample(1).first
   end
 end
