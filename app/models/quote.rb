@@ -14,14 +14,15 @@ class Quote < ActiveRecord::Base
 
   def self.edit!(user, subject, body)
     if quote = Quote.find( pluck_id(subject, 'EDIT') )
-      QuoteMailer.confirm_edit(user, quote, body).deliver
+      puts "---------- editing quote #{quote.id}"
+      QuoteMailer.confirm_edit(user, quote, body).deliver_now
       quote.update_attribute(:body, body)
     end
   end
 
   def self.delete!(user, subject)
     if quote = Quote.find( pluck_id(subject, 'DELETE') )
-      QuoteMailer.confirm_delete(user, quote).deliver
+      QuoteMailer.confirm_delete(user, quote).deliver_now
       quote.destroy
     end
   end
