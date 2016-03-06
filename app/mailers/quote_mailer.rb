@@ -4,10 +4,12 @@ class QuoteMailer < ActionMailer::Base
 
     @quote = quote
 
+    display_in_subject = quote.body.length < 100
+
     mail({
       to: user.email, 
-      from: "#{quote.author} (Quote Owl) <postmaster@app27196200.mailgun.org>", 
-      subject: quote.body.length > 100 ? quote.author : "#{quote.author} -- #{quote.body}"
+      from: "Quote Owl -- #{quote.author} <postmaster@app27196200.mailgun.org>", 
+      subject: display_in_subject ? quote.body : quote.author
     })
   end
 
