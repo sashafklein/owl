@@ -33,7 +33,7 @@ class Quote < ActiveRecord::Base
 
   private
 
-  def pluck_id(subject, action_string) 
+  def self.pluck_id(subject, action_string) 
     subject.split(action_string)[1].gsub(':', '').gsub('-', '').strip
   end
 
