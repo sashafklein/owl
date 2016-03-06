@@ -12,20 +12,18 @@ class QuotesController < ApplicationController
     puts "---------- #{sender}"
     puts "---------- #{subject}"
     puts "---------- #{body}"
+
     if subject && body
       user = User.where(email: sender).first_or_create
 
-      puts "SUBJECT: #{subject}"
-      puts "BODY: #{body}"
-
       if subject.include?("DELETE")
-        puts "---------- in delete"
+        puts "---------- deleting"
         Quote.delete!(user, subject)
       elsif subject.include?("EDIT")
-        puts "---------- in edit"
+        puts "---------- editing"
         Quote.edit!(user, subject, body)
       else 
-        puts "---------- in adding"
+        puts "---------- adding"
         user.add_quote({author: subject, body: body})
       end
     end
