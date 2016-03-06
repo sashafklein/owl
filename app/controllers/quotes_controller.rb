@@ -8,6 +8,10 @@ class QuotesController < ApplicationController
     subject    = params.fetch('subject', nil)
     body      = params.fetch('stripped-text', nil)
 
+    puts "RECEIVING:   "
+    puts "---------- #{sender}"
+    puts "---------- #{subject}"
+    puts "---------- #{body}"
     if subject && body
       user = User.where(email: sender).first_or_create
 
@@ -15,10 +19,13 @@ class QuotesController < ApplicationController
       puts "BODY: #{body}"
 
       if subject.include?("DELETE")
+        puts "---------- in delete"
         Quote.delete!(user, subject)
       elsif subject.include?("EDIT")
+        puts "---------- in edit"
         Quote.edit!(user, subject, body)
       else 
+        puts "---------- in adding"
         user.add_quote({author: subject, body: body})
       end
     end
