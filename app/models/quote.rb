@@ -4,6 +4,19 @@ class Quote < ActiveRecord::Base
 
   validate :is_unique_for_collection
 
+  def self.run_editor
+    all.find_each do |quote|
+      puts quote.body
+      puts "Remove spaces?"
+      response = gets.chomp
+      go = response.downcase.include?('y')
+      if go
+        quote.update_attribute(:body, quote.body.gsub("\r\n", ' '))
+        puts quote.reload.body
+      end
+    end
+  end
+
   def self.sent_the_fewest_times
     where(times_sent: min_times_sent)
   end
