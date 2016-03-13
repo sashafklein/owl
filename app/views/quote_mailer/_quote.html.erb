@@ -1,6 +1,8 @@
-<% body.split("\r\n").each_with_index do |line, index| %>
-  <p style='text-align: center; line-height: 1.9; padding: 0 40; font-size: 17px; font-weight: normal; font-family: "Gotham-Light", helvetica'>
-    <%= line.html_safe %>
-    </br>
-  </p>
-<% end %>
+<div style='padding: 0 40px'>
+  <% body.split("\r\n").each_with_index do |line, index| %>
+    <p style='text-align: center; line-height: 1.9; padding: 0 40; font-size: 17px; font-weight: normal; font-family: "Gotham-Light", helvetica'>
+      <%= line.html_safe %>
+      </br>
+    </p>
+  <% end %>
+</div>
