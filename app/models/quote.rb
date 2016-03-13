@@ -1,6 +1,6 @@
 class Quote < ActiveRecord::Base
   include ActionView::Helpers::TagHelper
-  
+
   belongs_to :collection
   delegate :users, to: :collection
 
@@ -29,7 +29,7 @@ class Quote < ActiveRecord::Base
 
   def self.edit!(user, subject, body)
     if quote = Quote.find( pluck_id(subject, 'EDIT') )
-      QuoteMailer.confirm_edit(user, quote, body).deliver_now
+      QuoteMailer.confirm_edit(user, quote, boldify(body)).deliver_now
       quote.update_attribute(:body, body)
     end
   end
@@ -41,18 +41,16 @@ class Quote < ActiveRecord::Base
     end
   end
 
+  def self.boldify(quote) 
+    quote.gsub(/(?:\*+)([a-zA-Z0-9 ]+)(?:\*+)/) { "<strong>#{$1}</strong>" }
+  end
+
   def increment_times_sent!
     update_attribute(:times_sent, times_sent + 1)
   end
 
   def display_body
-    response = body.split("\r\n").map do |line|
-      content_tag :p, style: 'text-align: center; line-height: 1.2; padding: 0 40px; font-size: 17px; font-weight: normal; font-family: "Gotham-Light", helvetica' do
-        line
-      end
-    end
-    binding.pry
-    response
+    Quote.boldify(body)
   end
 
   private

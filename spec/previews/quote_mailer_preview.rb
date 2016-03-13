@@ -1,6 +1,6 @@
 class QuoteMailerPreview < ActionMailer::Preview
   def send_quote
-    QuoteMailer.send_quote(User.first, Quote.find(192))
+    QuoteMailer.send_quote(User.first, Quote.find(99))
   end
 
   def confirm_delete

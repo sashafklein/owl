@@ -2,6 +2,6 @@
   <h2 style='font-size: 24px; text-align: center; font-weight: normal; font-family: "Gotham-Light", helvetica; margin-bottom: 30px;'>
     <%= @quote.author %>
   </h2>
-  <%= render 'quote', body: @quote.body %>
+  <%= render 'quote', body: @quote.display_body %>
   <p style='text-align: center; font-size: 10px; color: #F7F7F7'><%= @quote.id %></p>
 </div>
