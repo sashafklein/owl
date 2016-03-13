@@ -1,4 +1,6 @@
 class Quote < ActiveRecord::Base
+  include ActionView::Helpers::TagHelper
+  
   belongs_to :collection
   delegate :users, to: :collection
 
@@ -41,6 +43,16 @@ class Quote < ActiveRecord::Base
 
   def increment_times_sent!
     update_attribute(:times_sent, times_sent + 1)
+  end
+
+  def display_body
+    response = body.split("\r\n").map do |line|
+      content_tag :p, style: 'text-align: center; line-height: 1.2; padding: 0 40px; font-size: 17px; font-weight: normal; font-family: "Gotham-Light", helvetica' do
+        line
+      end
+    end
+    binding.pry
+    response
   end
 
   private
