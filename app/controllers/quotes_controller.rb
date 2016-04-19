@@ -17,7 +17,7 @@ class QuotesController < ApplicationController
       user = User.where(email: sender).first_or_create
 
       # GMAIL inserts newlines. Cut them out, but preserve hard-written line breaks.
-      formattedBody = body.gsub("\r\n", ' ').gsub("\n", "\r\n")
+      formattedBody = body.gsub("\r\n", ' ').gsub('\n', "\r\n")
 
       if subject.include?("DELETE")
         puts "---------- deleting"
