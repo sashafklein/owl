@@ -1,5 +1,5 @@
 class QuotesController < ApplicationController
-  
+
   skip_before_filter :verify_authenticity_token, only: [:handle]
 
   def handle
@@ -16,15 +16,18 @@ class QuotesController < ApplicationController
     if subject && body
       user = User.where(email: sender).first_or_create
 
+      # GMAIL inserts newlines. Cut them out, but preserve hard-written line breaks.
+      formattedBody = body.gsub("\r\n", ' ').gsub("\n", "\r\n")
+
       if subject.include?("DELETE")
         puts "---------- deleting"
         Quote.delete!(user, subject)
       elsif subject.include?("EDIT")
         puts "---------- editing"
-        Quote.edit!(user, subject, body)
-      else 
+        Quote.edit!(user, subject, formattedBody)
+      else
         puts "---------- adding"
-        user.add_quote({author: subject, body: body})
+        user.add_quote({author: subject, body: formattedBody})
       end
     end
 
